@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe Game</title>
+</head>
+<body>
+  <h1>Welcome to the Tic Tac Toe Game!</h1>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:3000');
+
+    ws.onmessage = (event) => {
+      // Обработка сообщений от сервера
+      console.log(`Received message: ${event.data}`);
+    };
+
+    ws.onopen = () => {
+      // Отправка сообщения при подключении
+      ws.send('Hello, server!');
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model room {
+  id           String     @id @default(cuid())
+  roomId       String   @unique
+  playersCount Int
+  currentTurn  Int      @default(0)
+  numRows      Int
+  numColumns   Int
+  typeBoard    String
+  moves        move[] 
+  players      player[] 
+}
+
+model player {
+  id          Int    @id @default(autoincrement())
+  nickName    String
+  roomId      String 
+  sessionId   String    
+  score       Int    @default(0)
+  playerOrder Int    @default(0) // Для хранения порядка игроков
+  isActive    Boolean   @default(true)  // Флаг активности
+  room        room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+model move {
+  id          Int    @id @default(autoincrement())
+  rowIndex    Int
+  columnIndex Int
+  direction   String
+  roomId      String
+  room        room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
