@@ -396,7 +396,7 @@ async function createWebSocket(server) {
                     
                       const bottomExists = moveExists(rowIndex, columnIndex, 'bottom', moves)
                        
-                      console.log(`chek top${ moveExists(rowIndex, columnIndex, 'top', moves)}top${topExists}, bot ${bottomExists}, left ${leftExists}, righ${rightExists}` )
+                     
                         
                       return topExists && leftExists && rightExists && bottomExists;
                         
@@ -581,7 +581,6 @@ async function createWebSocket(server) {
         
 
         if ( player && player.isActive == false) {
-          console.log('perepodcl')
           // Игрок найден, делаем его активным
           await prisma.player.update({
             where: { id: player.id },
